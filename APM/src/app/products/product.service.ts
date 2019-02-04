@@ -1,8 +1,17 @@
 import { Product } from './product';
 import { Injectable } from '@angular/core';
+import { GlobalService } from './global.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+    constructor(private globalService: GlobalService) {
+
+    }
+
+    getId() {
+        return this.globalService.getNumber();
+    }
+
     getProducts(): Product[] {
         return [{
             productId: 1,

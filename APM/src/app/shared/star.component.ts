@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { ProductService } from '../products/product.service';
 
 @Component({
     selector: 'pm-star-component',
@@ -7,6 +8,10 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 })
 export class StarComponent implements OnChanges {
 
+    constructor(private productService: ProductService) {
+        console.log('creating StarComponent' + productService.getId().toString());
+    }
+
     private readonly maxStarRating = 5;
     private readonly maxStarWidth = 75;
 
@@ -14,6 +19,8 @@ export class StarComponent implements OnChanges {
     @Output() notify = new EventEmitter<number>();
 
     starWidth = this.maxStarWidth;
+
+    id = this.productService.getId();
 
     ngOnChanges() {
         this.adjustWidth();
