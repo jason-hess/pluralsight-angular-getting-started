@@ -1,6 +1,6 @@
 <div class='card'>
     <div class='card-header'>
-        {{pageTitle}}
+        {{pageTitle}} {{theRating}}
     </div>
     <div class='card-body'>
         <div class='row'>
@@ -41,7 +41,10 @@
                         <td>{{ product.productCode | lowercase }}</td>
                         <td>{{ product.releaseDate }}</td>
                         <td>{{ product.price | currency:'AUD':'symbol':'1.2-2' }}</td>
-                        <td>{{ product.starRating }}</td>
+                        <td>
+                            <pm-star-component [rating]='product.starRating'
+                            (notify)='onNotify($event)'></pm-star-component>
+                        </td>
                     </tr>
                 </tbody>
             </table>
