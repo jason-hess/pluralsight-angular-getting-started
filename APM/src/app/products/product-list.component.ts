@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from './product';
 import { ProductService } from './product.service';
+import { Observable, range } from 'rxjs';
+import { map, filter, tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'pm-product-list',
@@ -9,6 +12,8 @@ import { ProductService } from './product.service';
 })
 export class ProductListComponent implements OnInit {
     theRating: number;
+    productSubscription: any;
+    error: any;
     constructor(private productService: ProductService) {
         this.filter = 'cart';
         this.filteredProducts = this.products;
@@ -70,6 +75,17 @@ export class ProductListComponent implements OnInit {
         console.log('ProductListComponent.ngOnInit()');
         this.products = this.productService.getProducts();
         this.filterProducts();
+
+        const source$ = range(0, 10);
+        source$
+            .pipe(map(x => x * 3), filter(x => x % 2 === 0))
+            .subscribe(x => console.log(x));
+
+        this.productSubscription = this.productService
+            .getProductsObservable()
+            .subscribe(products => {
+                this.products = this.filteredProducts = products;
+            }, error => this.error = error);
     }
 
     onNotify(rating: number) {
