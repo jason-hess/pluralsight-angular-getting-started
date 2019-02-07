@@ -24,6 +24,7 @@
                             <button class='btn btn-primary'
                                     (click)='toggleImages()'>{{showImages ? 'Hide' : 'Show'}} Images</button>
                         </th>
+                        <th></th>
                         <th>Product</th>
                         <th>Code</th>
                         <th>Available</th>
@@ -33,6 +34,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor='let product of filteredProducts'>
+                        <td><button type="button" [routerLink]="['/product', product.productId]">View</button></td>
                         <td><img *ngIf='showImages'
                                  [src]='product.imageUrl'
                                  [style.width.px]='imageWidth'
