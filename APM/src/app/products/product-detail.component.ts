@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'pm-product-detail',
@@ -8,10 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
   productId: number;
+  timer: NodeJS.Timeout;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.productId = +this.route.snapshot.paramMap.get('id');
+    this.timer = setTimeout(() => this.router.navigate(['/products']), 500);
   }
 }
